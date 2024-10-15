@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>Place New Order</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="orderForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Customer ID</mat-label>
+      <input matInput required formControlName="customerId" type="number">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Payment method</mat-label>
+      <mat-select required formControlName="paymentMethod">
+        <mat-option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod">
+          {{ paymentMethod }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-accordion class="cart">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Products ({{ cartItems.length }})
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-list-item>
+          <mat-grid-list cols="5" rowHeight="2:1">
+            <mat-grid-tile colspan="3" class="cart-product">
+              <strong>Product Name</strong>
+            </mat-grid-tile>
+            <mat-grid-tile><strong>Quantity</strong></mat-grid-tile>
+            <mat-grid-tile><strong>Price</strong></mat-grid-tile>
+          </mat-grid-list>
+        </mat-list-item>
+
+        <mat-list-item *ngFor="let item of cartItems">
+          <mat-grid-list cols="5" rowHeight="2:1">
+            <mat-grid-tile colspan="3" class="cart-product">
+              {{ item.product.name }}
+            </mat-grid-tile>
+            <mat-grid-tile>{{ item.quantity }}</mat-grid-tile>
+            <mat-grid-tile>{{ item.unitPrice | currency }}</mat-grid-tile>
+          </mat-grid-list>
+        </mat-list-item>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="order-total-price">
+      Total price: {{ getTotalPrice() | currency }}
+    </div>
+
+    <mat-form-field class="w-100">
+      <mat-label>Message</mat-label>
+      <textarea matInput formControlName="paymentMethod" required="false"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close color="warn">Cancel</button>
+  <button mat-raised-button class="mat-success" [disabled]="!orderForm.valid"
+          (click)="createOrder()">
+    Place order
+  </button>
+</mat-dialog-actions>

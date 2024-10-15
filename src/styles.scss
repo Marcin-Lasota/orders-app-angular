@@ -1,4 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+@import "m3-theme.scss";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.p-3 {
+  padding: 16px;
+}
+
+.mt-3 {
+  margin-top: 16px;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.icon-big {
+  transform: scale(2);
+  padding: 0 16px;
+}

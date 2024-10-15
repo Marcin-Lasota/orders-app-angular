@@ -1,0 +1,98 @@
+<h2 mat-dialog-title>Order Details</h2>
+
+<mat-dialog-content>
+  <h6>Customer</h6>
+  <mat-form-field>
+    <mat-label>First Name</mat-label>
+    <input matInput [value]="orderDetails?.customer?.firstName" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Last Name</mat-label>
+    <input matInput [value]="orderDetails?.customer?.lastName" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>E-mail</mat-label>
+    <input matInput [value]="orderDetails?.customer?.email" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Phone Number</mat-label>
+    <input matInput [value]="orderDetails?.customer?.phone" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Address</mat-label>
+    <input matInput [value]="orderDetails?.customer?.address" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>City</mat-label>
+    <input matInput [value]="orderDetails?.customer?.city" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Country</mat-label>
+    <input matInput [value]="orderDetails?.customer?.country" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Postal Code</mat-label>
+    <input matInput [value]="orderDetails?.customer?.postalCode" readonly>
+  </mat-form-field>
+
+  <h6>Order</h6>
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <input matInput [value]="orderDetails?.status" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Order Date</mat-label>
+    <input matInput [value]="orderDetails?.orderDate | date" readonly>
+  </mat-form-field>
+  <br>
+  <mat-accordion class="cart">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Products ({{ orderDetails?.totalItems }})
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-list-item>
+        <mat-grid-list cols="5" rowHeight="2:1">
+          <mat-grid-tile colspan="3" class="cart-product">
+            <strong>Product Name</strong>
+          </mat-grid-tile>
+          <mat-grid-tile><strong>Quantity</strong></mat-grid-tile>
+          <mat-grid-tile><strong>Price</strong></mat-grid-tile>
+        </mat-grid-list>
+      </mat-list-item>
+
+      <mat-list-item *ngFor="let item of orderDetails?.orderItems">
+        <mat-grid-list cols="5" rowHeight="2:1">
+          <mat-grid-tile colspan="3" class="cart-product">
+            {{ item.product.name }}
+          </mat-grid-tile>
+          <mat-grid-tile>{{ item.quantity }}</mat-grid-tile>
+          <mat-grid-tile>{{ item.unitPrice | currency }}</mat-grid-tile>
+        </mat-grid-list>
+      </mat-list-item>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br>
+  <mat-form-field>
+    <mat-label>Total price</mat-label>
+    <input matInput [value]="orderDetails?.totalPrice | currency" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Payment Method</mat-label>
+    <input matInput [value]="orderDetails?.paymentMethod" readonly>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close color="primary">Close</button>
+  <button *ngIf="canCancel" mat-button color="warn"
+          (click)="confirmOrderCancellation(orderDetails?.id)">
+    Cancel
+  </button>
+  <button *ngIf="canPay" mat-button class="mat-success"
+          (click)="confirmPay(orderDetails?.id)">
+    Pay
+  </button>
+</mat-dialog-actions>
